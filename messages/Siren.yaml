@@ -1,0 +1,143 @@
+Siren:
+  enums:
+    HIGH_SPEED: 30
+  arb_id:
+        frame: extended
+        components:
+          source_address:
+              short_name: SA
+              description: "Node that send message"
+              type: uint8
+              start_bit: 0
+              bit_count: 8
+              meta_type: SOURCE
+          destination:
+              type: uint8
+              start_bit: 8
+              bit_count: 8
+          function_code:
+              type: uint8
+              start_bit: 16
+              bit_count: 8
+          data_page:
+              type: uint8
+              short_name: data_page
+              start_bit: 24
+              bit_count: 1
+              default: 0x0
+          reserved:
+              type: uint8
+              short_name: reserved
+              start_bit: 25
+              bit_count: 1
+              default: 0x0
+          priority:
+              type: uint8
+              short_name: priority
+              start_bit: 26
+              bit_count: 3
+              default: 0x07
+
+  messages:
+    Ping:
+      frame_length: 8
+      transmit_rate: 1000
+      id:
+        function_code: 0xFF
+        destination: 0xFF
+      data:
+        torque:
+          uom: 'count'
+          type: uint16
+          start_byte: 1
+          start_bit: 0
+          bit_count: 16
+          scale: 1
+          offset: 0
+          default: 0
+
+    Sprinkle_Command:
+      frame_length: 8
+      transmit_rate: 1000
+      id:
+        function_code: 0x10
+      data:
+        Sprinkler1:
+          uom: 'unitless'
+          type: uint8
+          start_byte: 1
+          start_bit: 0
+          bit_count: 1
+          scale: 1
+          offset: 0
+          default: 0
+        Sprinkler2:
+          uom: 'unitless'
+          type: uint8
+          start_byte: 1
+          start_bit: 1
+          bit_count: 1
+          scale: 1
+          offset: 0
+          default: 0
+        Sprinkler3:
+          uom: 'unitless'
+          type: uint8
+          start_byte: 1
+          start_bit: 2
+          bit_count: 1
+          scale: 1
+          offset: 0
+          default: 0
+        Sprinkler4:
+          uom: 'unitless'
+          type: uint8
+          start_byte: 1
+          start_bit: 3
+          bit_count: 1
+          scale: 1
+          offset: 0
+          default: 0
+
+    SprinklerStatus:
+      frame_length: 8
+      transmit_rate: 1000
+      id:
+        function_code: 0x11
+      data:
+        Sprinkler1:
+          uom: 'unitless'
+          type: uint8
+          start_byte: 1
+          start_bit: 0
+          bit_count: 1
+          scale: 1
+          offset: 0
+          default: 0
+        Sprinkler2:
+          uom: 'unitless'
+          type: uint8
+          start_byte: 1
+          start_bit: 1
+          bit_count: 1
+          scale: 1
+          offset: 0
+          default: 0
+        Sprinkler3:
+          uom: 'unitless'
+          type: uint8
+          start_byte: 1
+          start_bit: 2
+          bit_count: 1
+          scale: 1
+          offset: 0
+          default: 0
+        Sprinkler4:
+          uom: 'unitless'
+          type: uint8
+          start_byte: 1
+          start_bit: 3
+          bit_count: 1
+          scale: 1
+          offset: 0
+          default: 0

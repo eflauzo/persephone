@@ -1,0 +1,6 @@
+int - 9  - green 
+cs -  10  - white
+si   -  11 purple
+so   - 12 grey
+sck  - 13 - blue
+
