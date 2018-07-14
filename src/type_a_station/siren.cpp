@@ -20,7 +20,70 @@ void SirenArbId_decode(struct SirenArbId* handle, uint32_t arbid){
     handle->source_address = ((arbid >> 0) & 0xff);
 }
 
-void SirenSprinkle_Command_encode(struct SirenSprinkle_Command_t* handle, uint8_t data[]) {
+void SirenEnvironmentSample_encode(struct SirenEnvironmentSample_t* handle, uint8_t data[]) {
+    data[0] = 0x00;
+    data[1] = 0x00;
+    data[2] = 0x00;
+    data[3] = 0x00;
+    data[4] = 0x00;
+    data[5] = 0x00;
+    data[6] = 0x00;
+    data[7] = 0x00;
+    // serializing Pressure
+    unsigned long Pressure_tmp = (unsigned long)((handle->Pressure - (800.0)) / 0.00610360875868);
+    data[2] = data[2] | ((Pressure_tmp << 0) & 0b11111111);
+    Pressure_tmp >>= 8;
+    data[3] = data[3] | ((Pressure_tmp << 0) & 0b11111111);
+    Pressure_tmp >>= 8;
+    // serializing Temperature
+    unsigned long Temperature_tmp = (unsigned long)((handle->Temperature - (-150.0)) / 0.00457770656901);
+    data[0] = data[0] | ((Temperature_tmp << 0) & 0b11111111);
+    Temperature_tmp >>= 8;
+    data[1] = data[1] | ((Temperature_tmp << 0) & 0b11111111);
+    Temperature_tmp >>= 8;
+    // serializing RelativeHumidity
+    unsigned long RelativeHumidity_tmp = (unsigned long)((handle->RelativeHumidity - (0.392156862745)) / 1.0);
+    data[0] = data[0] | ((RelativeHumidity_tmp << 0) & 0b11111111);
+    RelativeHumidity_tmp >>= 8;
+}
+
+void SirenEnvironmentSample_decode(struct SirenEnvironmentSample_t* handle, uint8_t data[]) {
+    uint8_t byte_i;
+    // deserializing Pressure
+    unsigned long Pressure_tmp = 0x0;
+    byte_i = data[2];
+    byte_i >>= 0;
+    byte_i &= 0xff; /* Masking out bits 0b11111111 */
+    Pressure_tmp |= ((unsigned long)byte_i << 0);
+    byte_i = data[3];
+    byte_i >>= 0;
+    byte_i &= 0xff; /* Masking out bits 0b11111111 */
+    Pressure_tmp |= ((unsigned long)byte_i << 8);
+    handle->Pressure = Pressure_tmp * (0.00610360875868) + (800.0);
+    
+    // deserializing Temperature
+    unsigned long Temperature_tmp = 0x0;
+    byte_i = data[0];
+    byte_i >>= 0;
+    byte_i &= 0xff; /* Masking out bits 0b11111111 */
+    Temperature_tmp |= ((unsigned long)byte_i << 0);
+    byte_i = data[1];
+    byte_i >>= 0;
+    byte_i &= 0xff; /* Masking out bits 0b11111111 */
+    Temperature_tmp |= ((unsigned long)byte_i << 8);
+    handle->Temperature = Temperature_tmp * (0.00457770656901) + (-150.0);
+    
+    // deserializing RelativeHumidity
+    unsigned long RelativeHumidity_tmp = 0x0;
+    byte_i = data[0];
+    byte_i >>= 0;
+    byte_i &= 0xff; /* Masking out bits 0b11111111 */
+    RelativeHumidity_tmp |= ((unsigned long)byte_i << 0);
+    handle->RelativeHumidity = RelativeHumidity_tmp * (1.0) + (0.392156862745);
+    
+}
+
+void SirenSprinkleCommand_encode(struct SirenSprinkleCommand_t* handle, uint8_t data[]) {
     data[0] = 0x00;
     data[1] = 0x00;
     data[2] = 0x00;
@@ -47,7 +110,7 @@ void SirenSprinkle_Command_encode(struct SirenSprinkle_Command_t* handle, uint8_
     Sprinkler1_tmp >>= 1;
 }
 
-void SirenSprinkle_Command_decode(struct SirenSprinkle_Command_t* handle, uint8_t data[]) {
+void SirenSprinkleCommand_decode(struct SirenSprinkleCommand_t* handle, uint8_t data[]) {
     uint8_t byte_i;
     // deserializing Sprinkler4
     unsigned long Sprinkler4_tmp = 0x0;
@@ -92,27 +155,27 @@ void SirenPing_encode(struct SirenPing_t* handle, uint8_t data[]) {
     data[5] = 0x00;
     data[6] = 0x00;
     data[7] = 0x00;
-    // serializing torque
-    unsigned long torque_tmp = (unsigned long)((handle->torque - (0)) / 1);
-    data[0] = data[0] | ((torque_tmp << 0) & 0b11111111);
-    torque_tmp >>= 8;
-    data[1] = data[1] | ((torque_tmp << 0) & 0b11111111);
-    torque_tmp >>= 8;
+    // serializing cycle
+    unsigned long cycle_tmp = (unsigned long)((handle->cycle - (0)) / 1);
+    data[0] = data[0] | ((cycle_tmp << 0) & 0b11111111);
+    cycle_tmp >>= 8;
+    data[1] = data[1] | ((cycle_tmp << 0) & 0b11111111);
+    cycle_tmp >>= 8;
 }
 
 void SirenPing_decode(struct SirenPing_t* handle, uint8_t data[]) {
     uint8_t byte_i;
-    // deserializing torque
-    unsigned long torque_tmp = 0x0;
+    // deserializing cycle
+    unsigned long cycle_tmp = 0x0;
     byte_i = data[0];
     byte_i >>= 0;
     byte_i &= 0xff; /* Masking out bits 0b11111111 */
-    torque_tmp |= ((unsigned long)byte_i << 0);
+    cycle_tmp |= ((unsigned long)byte_i << 0);
     byte_i = data[1];
     byte_i >>= 0;
     byte_i &= 0xff; /* Masking out bits 0b11111111 */
-    torque_tmp |= ((unsigned long)byte_i << 8);
-    handle->torque = torque_tmp * (1) + (0);
+    cycle_tmp |= ((unsigned long)byte_i << 8);
+    handle->cycle = cycle_tmp * (1) + (0);
     
 }
 
@@ -182,7 +245,8 @@ void SirenSprinklerStatus_decode(struct SirenSprinklerStatus_t* handle, uint8_t 
 
 void Siren_init(struct SirenDispatcher_t *handle){
     handle->user_data = NULL;
-    handle->on_Sprinkle_Command_ptr = NULL;
+    handle->on_EnvironmentSample_ptr = NULL;
+    handle->on_SprinkleCommand_ptr = NULL;
     handle->on_Ping_ptr = NULL;
     handle->on_SprinklerStatus_ptr = NULL;
 }
@@ -191,12 +255,21 @@ void Siren_dispatch(struct SirenDispatcher_t *handle, uint32_t arb_id, uint8_t d
     struct SirenArbId arb_id_struct;
     SirenArbId_decode(&arb_id_struct, arb_id);
     if (
+        (arb_id_struct.function_code==18)
+    ){
+        if (handle->on_EnvironmentSample_ptr != NULL){
+            struct SirenEnvironmentSample_t msg;
+            SirenEnvironmentSample_decode(&msg, data);
+            (*handle->on_EnvironmentSample_ptr)(handle, arb_id, &msg);
+        }
+    }
+    if (
         (arb_id_struct.function_code==16)
     ){
-        if (handle->on_Sprinkle_Command_ptr != NULL){
-            struct SirenSprinkle_Command_t msg;
-            SirenSprinkle_Command_decode(&msg, data);
-            (*handle->on_Sprinkle_Command_ptr)(handle, arb_id, &msg);
+        if (handle->on_SprinkleCommand_ptr != NULL){
+            struct SirenSprinkleCommand_t msg;
+            SirenSprinkleCommand_decode(&msg, data);
+            (*handle->on_SprinkleCommand_ptr)(handle, arb_id, &msg);
         }
     }
     if (
@@ -221,8 +294,18 @@ void Siren_dispatch(struct SirenDispatcher_t *handle, uint32_t arb_id, uint8_t d
 
 
 
-/* initialize Sprinkle_Command message with message specific ID fields */
-void SirenSprinkle_Command_init(struct SirenArbId* arb_id, struct SirenSprinkle_Command_t* data){
+/* initialize EnvironmentSample message with message specific ID fields */
+void SirenEnvironmentSample_init(struct SirenArbId* arb_id, struct SirenEnvironmentSample_t* data){
+    arb_id->priority = 7;
+    arb_id->function_code = 18;
+    arb_id->data_page = 0;
+    arb_id->reserved = 0;
+    arb_id->destination = 0;
+    arb_id->source_address = 0;
+}
+
+/* initialize SprinkleCommand message with message specific ID fields */
+void SirenSprinkleCommand_init(struct SirenArbId* arb_id, struct SirenSprinkleCommand_t* data){
     arb_id->priority = 7;
     arb_id->function_code = 16;
     arb_id->data_page = 0;

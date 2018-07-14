@@ -46,7 +46,7 @@ Siren:
         function_code: 0xFF
         destination: 0xFF
       data:
-        torque:
+        cycle:
           uom: 'count'
           type: uint16
           start_byte: 1
@@ -56,7 +56,7 @@ Siren:
           offset: 0
           default: 0
 
-    Sprinkle_Command:
+    SprinkleCommand:
       frame_length: 8
       transmit_rate: 1000
       id:
@@ -141,3 +141,37 @@ Siren:
           scale: 1
           offset: 0
           default: 0
+
+    EnvironmentSample:
+        frame_length: 8
+        transmit_rate: 1000
+        id:
+          function_code: 0x12
+        data:
+          Temperature:
+            uom: 'C'
+            type: float
+            start_byte: 1
+            start_bit: 0
+            bit_count: 16
+            scale: 0.00457770656901
+            offset: -150.0
+            default: 0
+          Pressure:
+            uom: 'hPa'
+            type: float
+            start_byte: 3
+            start_bit: 0
+            bit_count: 16
+            scale: 0.00610360875868
+            offset: 800.0
+            default: 0
+          RelativeHumidity:
+            uom: '%'
+            type: float
+            start_byte: 1
+            start_bit: 0
+            bit_count: 8
+            scale: 1.0
+            offset: 0.392156862745
+            default: 0
