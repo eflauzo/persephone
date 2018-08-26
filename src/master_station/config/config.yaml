@@ -1,0 +1,54 @@
+
+name: "percephone1"
+
+stations:
+  station1:
+    name: "Station1 (Addr 10)"
+    type: Siren
+    addr: 10
+
+    sprinklers:
+
+      - sprinkler:
+          name: "Front Yard (#1)"
+          schedule:
+            days: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+            time:
+              hour: 16
+              minute: 23
+              duration: 30.0
+            enabled: true
+          control: 1
+
+      - sprinkler:
+          name: "Back Yard - North (#2)"
+          schedule:
+            days: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+            time:
+              hour: 7
+              minute: 45
+              duration: 420.0
+            enabled: true
+          control: 2
+
+      - sprinkler:
+          name: "Back Yard - North-East (#3)"
+          schedule:
+            days: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+            time:
+              hour: 17
+              minute: 20
+              duration: 120.0
+            enabled: true
+          control: 3
+
+      - sprinkler:
+          name: "Side Yard - East (#4)"
+          schedule:
+            days: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+            time:
+              hour: 17
+              minute: 25
+              duration: 240.0
+            enabled: true
+          control: 4
