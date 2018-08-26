@@ -2,3 +2,4 @@ pyyaml
 python-can
 canstruct
 urwid
+pyyaml
