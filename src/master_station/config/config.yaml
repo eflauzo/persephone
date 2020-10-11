@@ -9,16 +9,16 @@ stations:
 
     sprinklers:
 
-      - sprinkler:
-          name: "Front Yard (#1)"
-          schedule:
-            days: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
-            time:
-              hour: 16
-              minute: 23
-              duration: 30.0
-            enabled: true
-          control: 1
+      #- sprinkler:
+      #    name: "Front Yard (#1)"
+      #    schedule:
+      #      days: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+      #      time:
+      #        hour: 16
+      #        minute: 23
+      #        duration: 30.0
+      #      enabled: true
+      #    control: 1
 
       - sprinkler:
           name: "Back Yard - North (#2)"
@@ -49,6 +49,35 @@ stations:
             time:
               hour: 17
               minute: 25
-              duration: 240.0
+              duration: 5.0
             enabled: true
           control: 4
+
+  station2:
+    name: "Station2 (Addr 11)"
+    type: Siren
+    addr: 11
+
+    sprinklers:
+
+      - sprinkler:
+          name: "Trees"
+          schedule:
+            days: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+            time:
+              hour: 17
+              minute: 40
+              duration: 30.0
+            enabled: true
+          control: 1
+
+      - sprinkler:
+          name: "Tomatoes"
+          schedule:
+            days: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+            time:
+              hour: 17
+              minute: 45
+              duration: 60.0
+            enabled: true
+          control: 2

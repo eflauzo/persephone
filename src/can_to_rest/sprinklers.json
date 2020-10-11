@@ -1,0 +1,33 @@
+{
+    "valves": {
+        "sprinkler1": {
+            "description": "Tomatoes (#1) (low deck)",
+            "address": 11,
+            "relay": 1
+        },
+
+        "sprinkler2": {
+            "description": "Back Yard - North (#2)",
+            "address": 10,
+            "relay": 1
+        },
+
+        "sprinkler3": {
+            "description": "Back Yard - North-East (#3)",
+            "address": 10,
+            "relay": 2
+        },
+
+        "sprinkler4": {
+            "description": "Side Yard - East (#4)",
+            "address": 10,
+            "relay": 3
+        },
+
+        "sprinkler5": {
+            "description": "Trees (#5) (hi deck)",
+            "address": 11,
+            "relay": 2
+        }
+    }
+}
